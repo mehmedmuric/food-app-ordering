@@ -12,7 +12,7 @@ export default function Hero() {
             </p>
             <div className="flex gap-4 text-sm">
               <button className="bg-primary flex gap-2 items-center rounded-full px-4 py-2 text-white font-semibold">Order Now <Right/></button>
-              <button className="flex gap-2 py-2 text-gray-600 font-semibold">Learn More <Right/></button>
+              <button className="flex gap-2 border-0 items-center py-2 text-gray-600 font-semibold">Learn More <Right/></button>
             </div>
           </div>
           <div className="relative">
