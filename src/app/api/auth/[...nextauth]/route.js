@@ -4,10 +4,11 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
-import clientPromise from "@/libs/mongoConnect"
+import clientPromise from "@/libs/mongoConnect";
+import bcrypt from "bcrypt";
 
 
-const handler = NextAuth({
+export const authOptions = {
   secret: process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
   providers:[
@@ -20,7 +21,7 @@ const handler = NextAuth({
         id: 'credentials',
         credentials: {
           username: { label: "Email", type: "email", placeholder: "test@gmail.com" },
-          password: { label: "Password", type: "password" }
+          password: { label: "Password", type: "password" },
         },
         async authorize(credentials, req) {
           const email = credentials?.email;
@@ -33,10 +34,12 @@ const handler = NextAuth({
             return user;
           }
   
-          return null
+          return null;
         }
       })
   ],
-});
+}
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }
