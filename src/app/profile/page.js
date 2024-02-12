@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import InfoBox from "../components/infoBox";
 import SuccessBox from "../components/successBox";
 import toast from "react-hot-toast";
+import Link from "next/link";
+import UserTabs from "../components/UserTabs";
 
 export default function ProfilePage(){
     const session = useSession();
@@ -17,6 +19,8 @@ export default function ProfilePage(){
     const [postalCode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [profileFetched, setProfileFetched] = useState(false);
 
 
     useEffect(() => {
@@ -30,6 +34,8 @@ export default function ProfilePage(){
                     setPostalCode(data.postalCode);
                     setCity(data.city);
                     setCountry(data.country);
+                    setIsAdmin(data.admin);
+                    setProfileFetched(true);
                 })
             });
         }
@@ -95,7 +101,7 @@ export default function ProfilePage(){
         });
     }
 
-    if(status === 'loading'){
+    if(status === 'loading' || !profileFetched){
         return 'Loading...';
     }
 
@@ -106,10 +112,8 @@ export default function ProfilePage(){
 
     return(
         <section className="mt-8">
-            <h1 className="text-center text-primary mb-4 text-4xl">
-                Profile
-            </h1>   
-            <div className="max-w-xs mx-auto">
+            <UserTabs isAdmin={isAdmin}/>
+            <div className="max-w-xs mx-auto mt-8">
                 <div className="flex gap-4 items-center">
                     <div>
                         <div className="p-2 rounded-lg relative max-w-[120px]">
