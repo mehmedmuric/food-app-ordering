@@ -8,6 +8,7 @@ import SuccessBox from "../components/successBox";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import UserTabs from "../components/UserTabs";
+import EditableImages from "../components/EditableImages";
 
 export default function ProfilePage(){
     const session = useSession();
@@ -41,35 +42,6 @@ export default function ProfilePage(){
         }
     },[session, status]);
 
-    async function handleFileChange(ev){
-        const files = ev.target.files;
-        if(files?.length === 1){
-            const data = new FormData;
-            data.set('file', files[0]);
-
-            
-                const uploadPromise = fetch('/api/upload', {
-                    method: 'POST',
-                    body: data,
-                }).then(response => {
-                    if(response.ok){
-                        return response.json().then(link => {
-                            setImage(link);
-                            resolve();
-                        });
-                    }
-                    throw new Error('error');
-                });
-
-            await toast.promise(uploadPromise, {
-                loading: 'Uploading...',
-                success: 'Upload Complete!',
-                error: 'Error',
-            });
-            
-        }
-
-    }
 
     async function handleProfileInfoUpdate(ev){
         ev.preventDefault();
@@ -117,13 +89,7 @@ export default function ProfilePage(){
                 <div className="flex gap-4 items-center">
                     <div>
                         <div className="p-2 rounded-lg relative max-w-[120px]">
-                            {image && (
-                                <Image className="rounded-lg w-full h-full mb-4" src={image} width={250} height={250}/>
-                            )}
-                                <label>
-                                    <input type="file" className="hidden" onChange={handleFileChange}/>
-                                    <span className="border rounded-lg p-2 text-center cursor-pointer block">Change Picture</span>
-                                </label>
+                            <EditableImages link={image} setLink={setImage}/>
                         </div>
                     </div>
                     <form className="grow" onSubmit={handleProfileInfoUpdate}>
