@@ -7,19 +7,15 @@ import EditableImages from "../../components/EditableImages";
 import Link from "next/link";
 import Left from "@/app/components/icons/Left";
 import { redirect } from "next/navigation";
+import MenuItemForm from "../../components/MenuItemForm";
 
-export default function NewMenuItemPage(){
+export default function NewMenuItemPage({menuItem}){
     const {loading, data} = UseProfile();
-    const [image, setImage] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [basePrice, setBasePrice] = useState('');
     const [redirectToItems, setRedirectToItems] = useState(false);
 
 
-    async function handleFormSubmit(ev){
+    async function handleFormSubmit(ev, data){
         ev.preventDefault();
-        const data = {image, name, description, basePrice};
         const savingPromise = new Promise(async(resolve, reject) => {
             const response = await fetch('/api/menu-items', {
                 method: 'POST',
@@ -60,22 +56,7 @@ export default function NewMenuItemPage(){
                 <span>Show all menu items</span>
             </Link>
         </div>
-        <form onSubmit={handleFormSubmit} className="mt-8 max-w-md mx-auto">
-         <div className="grid items-start gap-4" style={{gridTemplateColumns: '.3fr .7fr'}}>
-            <div>
-               <EditableImages link={image} setLink={setImage}/>
-            </div>
-            <div className="grow">
-               <label>Item name</label>
-               <input value={name} onChange={ev => setName(ev.target.value)} type="text"/>
-               <label>Description</label>
-               <input value={description} onChange={ev => setDescription(ev.target.value)} type="text"/>
-               <label>Price</label>
-               <input value={basePrice} onChange={ev => setBasePrice(ev.target.value)} type="text"/>
-               <button type="submit">Save</button>
-            </div>
-         </div>
-        </form>
+        <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit}/>
      </section>
     );
 }

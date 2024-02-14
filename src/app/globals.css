@@ -6,12 +6,12 @@ section.hero{
     @apply grid;
     grid-template-columns: .4fr .6fr;
 }
-
+select,
 input[type="email"],
 input[type="password"],
 input[type="tel"],
 input[type="text"] {
-    @apply border p-2 border-gray-300 bg-gray-200;
+    @apply border p-2 border-gray-300 bg-gray-400;
     @apply block w-full my-4 rounded-xl;   
 }
 

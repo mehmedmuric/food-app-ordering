@@ -16,8 +16,8 @@ export default function MenuItemsPage(){
             res.json().then(menuItems => {
                 setMenuItems(menuItems);
             });
-        })
-    }, [])
+        });
+    }, []);
 
     // if(loading){
     //     return 'Loading user info...';
@@ -38,9 +38,9 @@ export default function MenuItemsPage(){
             <h2 className="text-sm text-gray-500 mt-8">Edit menu item:</h2>
             <div className="grid grid-cols-3 gap-2">
                 {menuItems?.length > 0 && menuItems.map(item => (
-                    <Link href={'/menu-items/edit/'+item._id} className="button mb-2 flex-col">
+                    <Link href={'/menu-items/edit/'+item._id} key={item._id} className="bg-gray-400 rounded-lg py-4">
                         <div className="relative">
-                            <Image src={item.image} alt={''} width={100} height={100} layout="fill"/>
+                            <Image className="rounded-md" src={item.image} alt={''} width={100} height={100} layout="fill"/>
                         </div>
                         <div className="text-center">
                             {item.name}
