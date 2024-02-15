@@ -1,4 +1,4 @@
-export default function MenuItem() {
+export default function MenuItem({image, name, description, basePrice, sizes, extraIngredientPrice}) {
     return (
         <div className="bg-gray-300 text-center p-4 rounded-lg mt-10 hover:shadow-black/50 hover:shadow-md hover:bg-white transition-all group ">
             <div className="text-center">
